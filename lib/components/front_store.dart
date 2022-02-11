@@ -8,14 +8,6 @@ import '../model/riot_account.dart';
 import 'package:valorant_client/src/models/storefront.dart';
 import '../model/weapon_skinlevel/weapon_skinlevel.dart';
 
-final weponSkinlevelProvider =
-    FutureProvider.family<WeaponSkinlevel, String>((ref, uuid) async {
-  final url = 'https://valorant-api.com/v1/weapons/skinlevels/$uuid';
-  final response = await Dio().get(url, queryParameters: {'language': 'ja-JP'});
-  final weapon = WeaponSkinlevel.fromJson(response.data['data']);
-  return weapon;
-});
-
 Future<WeaponSkinlevel> getweponSkinlevel(String uuid) async {
   final url = 'https://valorant-api.com/v1/weapons/skinlevels/$uuid';
   final response = await Dio().get(url, queryParameters: {'language': 'ja-JP'});
@@ -23,11 +15,14 @@ Future<WeaponSkinlevel> getweponSkinlevel(String uuid) async {
   return weapon;
 }
 
-Future<List<WeaponSkinlevel>> getweponSkinlevels(List<String> uuids) async {
-  final tasks = uuids.map((uuid) => getweponSkinlevel(uuid)).toList();
-  final weapons = await Future.wait(tasks);
-  return weapons;
-}
+final weaponsProvider =
+    FutureProvider.family<List<WeaponSkinlevel>, List<String>>(
+  (ref, uuids) async {
+    final tasks = uuids.map((uuid) => getweponSkinlevel(uuid)).toList();
+    final weapons = await Future.wait(tasks);
+    return weapons;
+  },
+);
 
 class FrontStore extends ConsumerWidget {
   const FrontStore(this.riotAccount, {Key? key}) : super(key: key);
@@ -40,25 +35,20 @@ class FrontStore extends ConsumerWidget {
       data: (storeFront) {
         final offers = storeFront?.skinsPanelLayout?.singleItemOffers;
         if (offers == null) throw Error();
-        return FutureBuilder<List<WeaponSkinlevel>>(
-          future: getweponSkinlevels(offers),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final weapons = snapshot.data!;
-              return ListView.builder(
-                physics: const AlwaysScrollableScrollPhysics(),
-                itemCount: weapons.length,
-                itemBuilder: (context, index) => ProviderScope(
-                  child: const StoreItemCard(),
-                  overrides: [weaponProvider.overrideWithValue(weapons[index])],
-                ),
-              );
-            } else if (snapshot.hasError) {
-              return const Text('Error');
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
+        final _asyncWeapons = ref.watch(weaponsProvider(offers));
+        return _asyncWeapons.when(
+          data: (weapons) {
+            return ListView.builder(
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: weapons.length,
+              itemBuilder: (context, index) => ProviderScope(
+                child: const StoreItemCard(),
+                overrides: [weaponProvider.overrideWithValue(weapons[index])],
+              ),
+            );
           },
+          error: (err, _) => Text(err.toString()),
+          loading: () => const Center(child: CircularProgressIndicator()),
         );
       },
       loading: () => const Center(child: CircularProgressIndicator()),
