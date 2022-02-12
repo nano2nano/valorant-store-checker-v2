@@ -36,7 +36,14 @@ class RiotAccountList extends ConsumerWidget {
               itemBuilder: (_, int index) {
                 return Dismissible(
                   key: Key(_riotAccounts[index].id),
-                  child: RiotAccountCard(_riotAccounts[index]),
+                  child: ProviderScope(
+                    child: const RiotAccountCard(),
+                    overrides: [
+                      riotAccountProvider.overrideWithValue(
+                        _riotAccounts[index],
+                      )
+                    ],
+                  ),
                   onDismissed: (DismissDirection direction) async {
                     await _riotAccountRepository.delete(_riotAccounts[index]);
                   },

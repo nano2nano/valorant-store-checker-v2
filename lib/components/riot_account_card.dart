@@ -1,14 +1,19 @@
 import 'package:check_store_v2/view/storefront_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/riot_account/riot_account.dart';
 
-class RiotAccountCard extends StatelessWidget {
-  const RiotAccountCard(this.riotAccount, {Key? key}) : super(key: key);
-  final RiotAccount riotAccount;
+final riotAccountProvider =
+    Provider<RiotAccount>((ref) => throw UnimplementedError());
+
+class RiotAccountCard extends ConsumerWidget {
+  const RiotAccountCard({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final riotAccount = ref.watch(riotAccountProvider);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
