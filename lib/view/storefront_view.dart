@@ -6,6 +6,7 @@ import 'package:valorant_client/valorant_client.dart';
 import 'package:dio/dio.dart';
 // ignore: implementation_imports
 import 'package:valorant_client/src/models/storefront.dart';
+import '../components/storefront_card.dart' as storefront_card;
 import '../model/riot_account/riot_account.dart';
 import '../model/weapon_skinlevel/weapon_skinlevel.dart';
 
@@ -48,8 +49,11 @@ class StorefrontView extends ConsumerWidget {
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: weapons.length,
                 itemBuilder: (context, index) => ProviderScope(
-                  child: const StoreItemCard(),
-                  overrides: [weaponProvider.overrideWithValue(weapons[index])],
+                  child: const storefront_card.StoreItemCard(),
+                  overrides: [
+                    storefront_card.weaponProvider
+                        .overrideWithValue(weapons[index])
+                  ],
                 ),
               );
             },
@@ -84,37 +88,3 @@ final valorantClientProvider =
     return await client.playerInterface.getStorefront();
   },
 );
-
-final weaponProvider =
-    Provider<WeaponSkinlevel>((ref) => throw UnimplementedError());
-
-class StoreItemCard extends ConsumerWidget {
-  const StoreItemCard({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final weapon = ref.watch(weaponProvider);
-    return Card(
-      child: Column(
-        children: [
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              weapon.displayName,
-              textAlign: TextAlign.left,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 23,
-              ),
-            ),
-          ),
-          Image(
-            image: NetworkImage(weapon.displayIcon),
-            fit: BoxFit.fill,
-            height: 150,
-          ),
-        ],
-      ),
-    );
-  }
-}
