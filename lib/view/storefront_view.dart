@@ -24,35 +24,38 @@ final weaponsProvider =
   },
 );
 
-class FrontStore extends ConsumerWidget {
-  const FrontStore(this.riotAccount, {Key? key}) : super(key: key);
+class StorefrontView extends ConsumerWidget {
+  const StorefrontView(this.riotAccount, {Key? key}) : super(key: key);
   final RiotAccount riotAccount;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _asyncValorantClient = ref.watch(valorantClientProvider(riotAccount));
-    return _asyncValorantClient.when(
-      data: (storeFront) {
-        final offers = storeFront?.skinsPanelLayout?.singleItemOffers;
-        if (offers == null) throw Error();
-        final _asyncWeapons = ref.watch(weaponsProvider(offers));
-        return _asyncWeapons.when(
-          data: (weapons) {
-            return ListView.builder(
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemCount: weapons.length,
-              itemBuilder: (context, index) => ProviderScope(
-                child: const StoreItemCard(),
-                overrides: [weaponProvider.overrideWithValue(weapons[index])],
-              ),
-            );
-          },
-          error: (err, _) => Text(err.toString()),
-          loading: () => const Center(child: CircularProgressIndicator()),
-        );
-      },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, __) => Text(error.toString()),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Storefront')),
+      body: _asyncValorantClient.when(
+        data: (storeFront) {
+          final offers = storeFront?.skinsPanelLayout?.singleItemOffers;
+          if (offers == null) throw Error();
+          final _asyncWeapons = ref.watch(weaponsProvider(offers));
+          return _asyncWeapons.when(
+            data: (weapons) {
+              return ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: weapons.length,
+                itemBuilder: (context, index) => ProviderScope(
+                  child: const StoreItemCard(),
+                  overrides: [weaponProvider.overrideWithValue(weapons[index])],
+                ),
+              );
+            },
+            error: (err, _) => Text(err.toString()),
+            loading: () => const Center(child: CircularProgressIndicator()),
+          );
+        },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, __) => Text(error.toString()),
+      ),
     );
   }
 }

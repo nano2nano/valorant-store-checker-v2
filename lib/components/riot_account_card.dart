@@ -1,5 +1,5 @@
-import 'package:check_store_v2/components/front_store.dart';
 import 'package:check_store_v2/model/riot_account.dart';
+import 'package:check_store_v2/view/storefront_view.dart';
 import 'package:flutter/material.dart';
 
 class RiotAccountCard extends StatelessWidget {
@@ -13,10 +13,7 @@ class RiotAccountCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Scaffold(
-              appBar: AppBar(title: const Text('Storefront')),
-              body: FrontStore(riotAccount),
-            ),
+            builder: (context) => StorefrontView(riotAccount),
           ),
         );
       },
