@@ -1,5 +1,6 @@
-import 'package:check_store_v2/model/riot_account.dart';
 import 'package:hive/hive.dart';
+
+import '../model/riot_account/riot_account.dart';
 
 class RiotAccountRepository {
   late Box<RiotAccount> _box;

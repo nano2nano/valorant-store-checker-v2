@@ -1,6 +1,7 @@
-import 'package:check_store_v2/model/riot_account.dart';
 import 'package:check_store_v2/view/storefront_view.dart';
 import 'package:flutter/material.dart';
+
+import '../model/riot_account/riot_account.dart';
 
 class RiotAccountCard extends StatelessWidget {
   const RiotAccountCard(this.riotAccount, {Key? key}) : super(key: key);

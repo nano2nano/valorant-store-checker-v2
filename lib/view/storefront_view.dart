@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:valorant_client/valorant_client.dart';
 import 'package:dio/dio.dart';
-import '../model/riot_account.dart';
 import 'package:valorant_client/src/models/storefront.dart';
+import '../model/riot_account/riot_account.dart';
 import '../model/weapon_skinlevel/weapon_skinlevel.dart';
 
 Future<WeaponSkinlevel> getweponSkinlevel(String uuid) async {

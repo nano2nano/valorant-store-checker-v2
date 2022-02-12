@@ -1,9 +1,10 @@
 import 'package:check_store_v2/components/riot_account_card.dart';
-import 'package:check_store_v2/model/riot_account.dart';
 import 'package:check_store_v2/repository/account_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
+
+import '../model/riot_account/riot_account.dart';
 
 final riotAccountRepositoryProvider =
     FutureProvider((ref) => RiotAccountRepository.open());
