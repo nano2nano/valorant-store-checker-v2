@@ -25,12 +25,15 @@ final weaponsProvider =
   },
 );
 
+final riotAccountProvider =
+    Provider<RiotAccount>((ref) => throw UnimplementedError());
+
 class StorefrontView extends ConsumerWidget {
-  const StorefrontView(this.riotAccount, {Key? key}) : super(key: key);
-  final RiotAccount riotAccount;
+  const StorefrontView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final riotAccount = ref.watch(riotAccountProvider);
     final _asyncValorantClient = ref.watch(valorantClientProvider(riotAccount));
     return Scaffold(
       appBar: AppBar(title: const Text('Storefront')),

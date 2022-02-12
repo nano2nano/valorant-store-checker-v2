@@ -1,4 +1,4 @@
-import 'package:check_store_v2/view/storefront_view.dart';
+import 'package:check_store_v2/view/storefront_view.dart' as store_front_view;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,7 +19,13 @@ class RiotAccountCard extends ConsumerWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => StorefrontView(riotAccount),
+            builder: (context) => ProviderScope(
+              child: const store_front_view.StorefrontView(),
+              overrides: [
+                store_front_view.riotAccountProvider
+                    .overrideWithValue(riotAccount),
+              ],
+            ),
           ),
         );
       },
