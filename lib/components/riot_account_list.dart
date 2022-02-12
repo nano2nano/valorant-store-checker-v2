@@ -20,8 +20,6 @@ class RiotAccountList extends ConsumerWidget {
         ref.watch(riotAccountRepositoryProvider);
     return _asyncRiotAccountRepository.when(
       data: (RiotAccountRepository _riotAccountRepository) {
-        // ValueListenableBuilderとbox.listenable()でも変更を検知できるが
-        // テストしづらいためStreamBuilderとbox.watch()を採用
         return StreamBuilder(
           stream: _riotAccountRepository.stream,
           builder: (_, AsyncSnapshot<BoxEvent> snapshot) {
