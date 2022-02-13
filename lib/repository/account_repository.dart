@@ -1,6 +1,10 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 
 import '../model/riot_account/riot_account.dart';
+
+final riotAccountRepositoryProvider =
+    FutureProvider((ref) => RiotAccountRepository.open());
 
 class RiotAccountRepository {
   late Box<RiotAccount> _box;

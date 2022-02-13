@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final weponSkinlevelProvider =
@@ -19,24 +19,12 @@ class WeaponCard extends ConsumerWidget {
     return snapshot.when(
       data: (weponData) {
         if (weponData == null) throw Error();
-        return Card(
-          margin: const EdgeInsets.all(8),
-          child: Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ListTile(
-                  title: Text(weponData['displayName']),
-                ),
-              ],
-            ),
-          ),
+        return ListTile(
+          title: Text(weponData['displayName']),
         );
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (_, __) => const Center(child: CircularProgressIndicator()),
+      loading: () => const Center(child: ProgressRing()),
+      error: (_, __) => const Center(child: ProgressRing()),
     );
   }
 }

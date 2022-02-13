@@ -1,6 +1,6 @@
 import 'package:check_store_v2/error/auth_error.dart';
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:valorant_client/valorant_client.dart';
 import 'package:dio/dio.dart';
@@ -36,9 +36,9 @@ class StorefrontView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final riotAccount = ref.watch(riotAccountProvider);
     final _asyncValorantClient = ref.watch(valorantClientProvider(riotAccount));
-    return Scaffold(
-      appBar: AppBar(title: const Text('Storefront')),
-      body: _asyncValorantClient.when(
+    return NavigationView(
+      appBar: const NavigationAppBar(title: Text('Storefront')),
+      content: _asyncValorantClient.when(
         data: (storeFront) {
           final offers = storeFront?.skinsPanelLayout?.singleItemOffers;
           if (offers == null) throw Error();
@@ -58,10 +58,10 @@ class StorefrontView extends ConsumerWidget {
               );
             },
             error: (err, _) => Text(err.toString()),
-            loading: () => const Center(child: CircularProgressIndicator()),
+            loading: () => const Center(child: ProgressRing()),
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const Center(child: ProgressRing()),
         error: (error, __) => Text(error.toString()),
       ),
     );

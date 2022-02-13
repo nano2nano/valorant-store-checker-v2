@@ -1,7 +1,6 @@
-import 'package:check_store_v2/components/riot_account_list.dart';
 import 'package:check_store_v2/repository/account_repository.dart';
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:valorant_client/valorant_client.dart';
@@ -22,11 +21,11 @@ class AddAccountView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Register'),
+    return const NavigationView(
+      appBar: NavigationAppBar(
+        title: Text('Register'),
       ),
-      body: const _AddAccountView(),
+      content: _AddAccountView(),
     );
   }
 }
@@ -43,20 +42,14 @@ class _AddAccountView extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               const SizedBox(height: 24.0),
-              TextFormField(
+              TextBox(
                 controller: ref.watch(usernameControllerProvider),
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Username',
-                ),
+                placeholder: 'Username',
               ),
               const SizedBox(height: 24.0),
-              TextFormField(
+              TextBox(
                 controller: ref.watch(passwordControllerProvider),
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  labelText: 'Password',
-                ),
+                placeholder: 'Password',
                 obscureText: true,
               ),
               const SizedBox(height: 24.0),
@@ -83,11 +76,8 @@ class _AddAccountView extends ConsumerWidget {
                         region: EnumToString.convertToString(region),
                       );
                       await _riotAccountRepository.create(_newRiotAccount);
-                      WidgetsBinding.instance?.addPostFrameCallback((_) {
-                        Navigator.pop(context);
-                      });
                     },
-                    child: const Text('Register'),
+                    child: const Center(child: Text('Register')),
                   ),
                 ),
               ),
@@ -108,12 +98,12 @@ class CommonButton extends StatelessWidget {
   }) : super(key: key);
 
   final VoidCallback? onPressed;
-  final Widget? child;
+  final Widget child;
   final ButtonStyle? style;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: ElevatedButton(
+      child: Button(
         onPressed: onPressed,
         child: child,
         style: style,
@@ -128,10 +118,10 @@ final selectedRegionProvider = StateProvider.autoDispose<Region>(
   (ref) => Region.values[0],
 );
 
-final regionDropdownMenuItemProvider = Provider<List<DropdownMenuItem<Region>>>(
+final regionDropdownMenuItemProvider = Provider<List<ComboboxItem<Region>>>(
   (ref) => Region.values.map(
     (region) {
-      return DropdownMenuItem(
+      return ComboboxItem<Region>(
         child: Text(EnumToString.convertToString(region)),
         value: region,
       );
@@ -145,7 +135,7 @@ class DropDown extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedRegion = ref.watch(selectedRegionProvider.state);
-    return DropdownButton<Region>(
+    return Combobox<Region>(
       items: ref.watch(regionDropdownMenuItemProvider),
       value: selectedRegion.state,
       onChanged: (value) {

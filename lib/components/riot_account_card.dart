@@ -1,5 +1,5 @@
 import 'package:check_store_v2/view/storefront_view.dart' as store_front_view;
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../model/riot_account/riot_account.dart';
@@ -18,7 +18,7 @@ class RiotAccountCard extends ConsumerWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
+          FluentPageRoute(
             builder: (context) => ProviderScope(
               child: const store_front_view.StorefrontView(),
               overrides: [
@@ -29,20 +29,8 @@ class RiotAccountCard extends ConsumerWidget {
           ),
         );
       },
-      child: Card(
-        margin: const EdgeInsets.all(8),
-        child: Padding(
-          padding: const EdgeInsets.all(0.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                title: Text(riotAccount.username),
-              ),
-            ],
-          ),
-        ),
+      child: ListTile(
+        title: Text(riotAccount.username),
       ),
     );
   }

@@ -1,13 +1,10 @@
 import 'package:check_store_v2/components/riot_account_card.dart';
 import 'package:check_store_v2/repository/account_repository.dart';
-import 'package:flutter/material.dart';
+import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 
 import '../model/riot_account/riot_account.dart';
-
-final riotAccountRepositoryProvider =
-    FutureProvider((ref) => RiotAccountRepository.open());
 
 class RiotAccountList extends ConsumerWidget {
   const RiotAccountList({
@@ -54,8 +51,8 @@ class RiotAccountList extends ConsumerWidget {
           },
         );
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (_, __) => const Center(child: CircularProgressIndicator()),
+      loading: () => const Center(child: ProgressRing()),
+      error: (_, __) => const Center(child: ProgressRing()),
     );
   }
 }
