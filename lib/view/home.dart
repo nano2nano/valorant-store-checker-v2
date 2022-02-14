@@ -8,6 +8,9 @@ import '../model/riot_account/riot_account.dart';
 import '../repository/account_repository.dart';
 
 final indexProvider = StateProvider<int>((ref) => 0);
+final accountProvider = StateProvider<RiotAccount?>((ref) {
+  return null;
+});
 
 class Home extends ConsumerWidget {
   const Home({Key? key}) : super(key: key);
@@ -15,6 +18,7 @@ class Home extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _currentIndex = ref.watch(indexProvider);
+    final _currentAccount = ref.watch(accountProvider);
     final _asyncRiotAccountRepository =
         ref.watch(riotAccountRepositoryProvider);
     return _asyncRiotAccountRepository.when(
@@ -31,46 +35,75 @@ class Home extends ConsumerWidget {
               );
             }
 
-            final items = <NavigationPaneItem>[];
-            for (final riotAccount in _riotAccounts) {
-              items.add(PaneItem(
-                icon: const Icon(FluentIcons.reminder_person),
-                title: Text(riotAccount.username),
-              ));
-            }
-
-            items.add(PaneItemSeparator());
-            items.add(
-              PaneItem(
-                icon: const Icon(FluentIcons.add),
-                title: const Text('Add Account'),
-              ),
-            );
+            final homeViews = [
+              _currentAccount == null
+                  ? const ScaffoldPage()
+                  : ProviderScope(
+                      child: const storefront_view.StorefrontView(),
+                      overrides: [
+                        storefront_view.riotAccountProvider.overrideWithValue(
+                          ref.watch(accountProvider)!,
+                        )
+                      ],
+                    ),
+              const AddAccountView(),
+            ];
 
             return NavigationView(
               pane: NavigationPane(
                 selected: _currentIndex,
                 onChanged: (index) =>
                     ref.read(indexProvider.state).state = index,
-                items: items,
+                items: [
+                  PaneItem(
+                    icon: const Icon(FluentIcons.store_logo16),
+                    title: const Text('Storefront'),
+                  ),
+                  PaneItemSeparator(),
+                  PaneItemAction(
+                    icon: const Icon(FluentIcons.add),
+                    title: const Text('Add Account'),
+                    onTap: () => Navigator.pushNamed(context, '/add_account'),
+                  ),
+                ],
+                footerItems: [
+                  PaneItemHeader(
+                    header: Expander(
+                      header:
+                          Text(_currentAccount?.username ?? 'Select account'),
+                      content: Column(
+                        children: _riotAccounts
+                            .map(
+                              (account) => SizedBox(
+                                width: double.infinity,
+                                child: Button(
+                                  child: Text(
+                                    account.username,
+                                    textAlign: TextAlign.start,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    ref.read(accountProvider.state).state =
+                                        account;
+                                  },
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      direction: ExpanderDirection.up,
+                      initiallyExpanded: false,
+                    ),
+                  )
+                ],
                 displayMode: PaneDisplayMode.auto,
               ),
-              content: NavigationBody.builder(
+              content: NavigationBody(
                 index: _currentIndex,
-                itemBuilder: (context, index) {
-                  if (index < _riotAccounts.length) {
-                    return ProviderScope(
-                      child: const storefront_view.StorefrontView(),
-                      overrides: [
-                        storefront_view.riotAccountProvider.overrideWithValue(
-                          _riotAccounts[index],
-                        )
-                      ],
-                    );
-                  } else {
-                    return const AddAccountView();
-                  }
-                },
+                children: homeViews,
               ),
             );
           },

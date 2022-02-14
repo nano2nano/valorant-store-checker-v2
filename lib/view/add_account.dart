@@ -15,6 +15,9 @@ final passwordControllerProvider =
     StateProvider.autoDispose<TextEditingController>(
   (ref) => TextEditingController(),
 );
+final selectedRegionProvider = StateProvider.autoDispose<Region>(
+  (ref) => Region.values[0],
+);
 
 class AddAccountView extends StatelessWidget {
   const AddAccountView({Key? key}) : super(key: key);
@@ -53,36 +56,70 @@ class _AddAccountView extends ConsumerWidget {
                 obscureText: true,
               ),
               const SizedBox(height: 24.0),
-              const DropDown(),
+              const RegionSelector(),
               const SizedBox(height: 24.0),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: CommonButton(
-                    onPressed: () async {
-                      final username =
-                          ref.read(usernameControllerProvider).text;
-                      final password =
-                          ref.read(passwordControllerProvider).text;
-                      final region = ref.read(selectedRegionProvider);
-
-                      final RiotAccountRepository _riotAccountRepository =
-                          await ref.read(riotAccountRepositoryProvider.future);
-
-                      final RiotAccount _newRiotAccount = RiotAccount(
-                        id: const Uuid().v4(),
-                        username: username,
-                        password: password,
-                        region: EnumToString.convertToString(region),
-                      );
-                      await _riotAccountRepository.create(_newRiotAccount);
-                    },
-                    child: const Center(child: Text('Register')),
-                  ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: const [
+                    CancelButton(),
+                    RegisterButton(),
+                  ],
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class CancelButton extends StatelessWidget {
+  const CancelButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CommonButton(
+      onPressed: () {
+        Navigator.pop(context);
+      },
+      child: const Center(
+        child: Text(
+          'Cancel',
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+}
+
+class RegisterButton extends ConsumerWidget {
+  const RegisterButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return CommonButton(
+      onPressed: () async {
+        final username = ref.read(usernameControllerProvider).text;
+        final password = ref.read(passwordControllerProvider).text;
+        final region = ref.read(selectedRegionProvider);
+
+        final RiotAccountRepository _riotAccountRepository =
+            await ref.read(riotAccountRepositoryProvider.future);
+
+        final RiotAccount _newRiotAccount = RiotAccount(
+          id: const Uuid().v4(),
+          username: username,
+          password: password,
+          region: EnumToString.convertToString(region),
+        );
+        await _riotAccountRepository.create(_newRiotAccount);
+      },
+      child: const Center(
+        child: Text(
+          'Register',
+          textAlign: TextAlign.center,
         ),
       ),
     );
@@ -114,10 +151,6 @@ class CommonButton extends StatelessWidget {
   }
 }
 
-final selectedRegionProvider = StateProvider.autoDispose<Region>(
-  (ref) => Region.values[0],
-);
-
 final regionDropdownMenuItemProvider = Provider<List<ComboboxItem<Region>>>(
   (ref) => Region.values.map(
     (region) {
@@ -129,8 +162,8 @@ final regionDropdownMenuItemProvider = Provider<List<ComboboxItem<Region>>>(
   ).toList(),
 );
 
-class DropDown extends ConsumerWidget {
-  const DropDown({Key? key}) : super(key: key);
+class RegionSelector extends ConsumerWidget {
+  const RegionSelector({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
