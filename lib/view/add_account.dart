@@ -115,6 +115,7 @@ class RegisterButton extends ConsumerWidget {
           region: EnumToString.convertToString(region),
         );
         await _riotAccountRepository.create(_newRiotAccount);
+        Navigator.pop(context);
       },
       child: const Center(
         child: Text(
