@@ -21,6 +21,7 @@ class Home extends ConsumerWidget {
     final _currentAccount = ref.watch(accountProvider);
     final _asyncRiotAccountRepository =
         ref.watch(riotAccountRepositoryProvider);
+
     return _asyncRiotAccountRepository.when(
       data: (RiotAccountRepository _riotAccountRepository) {
         return StreamBuilder(
@@ -29,15 +30,11 @@ class Home extends ConsumerWidget {
             final List<RiotAccount> _riotAccounts =
                 _riotAccountRepository.riotAccounts;
 
-            if (_riotAccounts.isEmpty) {
-              return const Center(
-                child: Text('No accounts...'),
-              );
-            }
-
             final homeViews = [
               _currentAccount == null
-                  ? const ScaffoldPage()
+                  ? const ScaffoldPage(
+                      content: Center(child: Text('Select account')),
+                    )
                   : ProviderScope(
                       child: const storefront_view.StorefrontView(),
                       overrides: [
