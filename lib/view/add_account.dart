@@ -83,7 +83,7 @@ class _AddAccountView extends ConsumerWidget {
                         region: EnumToString.convertToString(region),
                       );
                       await _riotAccountRepository.create(_newRiotAccount);
-                      WidgetsBinding.instance?.addPostFrameCallback((_) {
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
                         Navigator.pop(context);
                       });
                     },
