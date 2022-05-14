@@ -39,7 +39,7 @@ dependencies:
   hive_flutter: ^1.1.0
   uuid: ^3.0.5
   enum_to_string: ^2.0.1
-  freezed: ^1.1.1
+  freezed: ^2.0.3+1
   json_serializable: ^6.1.4
   json_annotation: ^4.4.0
   fluent_ui: ^3.9.0
@@ -53,7 +53,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   hive_generator: ^1.1.2
   build_runner: ^2.1.8
 
