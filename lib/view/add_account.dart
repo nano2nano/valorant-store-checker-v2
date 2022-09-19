@@ -105,16 +105,16 @@ class RegisterButton extends ConsumerWidget {
         final password = ref.read(passwordControllerProvider).text;
         final region = ref.read(selectedRegionProvider);
 
-        final RiotAccountRepository _riotAccountRepository =
+        final RiotAccountRepository riotAccountRepository =
             await ref.read(riotAccountRepositoryProvider.future);
 
-        final RiotAccount _newRiotAccount = RiotAccount(
+        final RiotAccount newRiotAccount = RiotAccount(
           id: const Uuid().v4(),
           username: username,
           password: password,
           region: EnumToString.convertToString(region),
         );
-        await _riotAccountRepository.create(_newRiotAccount);
+        await riotAccountRepository.create(newRiotAccount);
         Navigator.pop(context);
       },
       child: const Center(

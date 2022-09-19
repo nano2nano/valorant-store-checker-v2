@@ -36,15 +36,15 @@ class StorefrontView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final riotAccount = ref.watch(riotAccountProvider);
-    final _asyncValorantClient = ref.watch(valorantClientProvider(riotAccount));
+    final asyncValorantClient = ref.watch(valorantClientProvider(riotAccount));
     return NavigationView(
       appBar: const NavigationAppBar(title: Text('Storefront')),
-      content: _asyncValorantClient.when(
+      content: asyncValorantClient.when(
         data: (storeFront) {
           final offers = storeFront?.skinsPanelLayout?.singleItemOffers;
           if (offers == null) throw Error();
-          final _asyncWeapons = ref.watch(weaponsProvider(offers));
-          return _asyncWeapons.when(
+          final asyncWeapons = ref.watch(weaponsProvider(offers));
+          return asyncWeapons.when(
             data: (weapons) {
               return ListView.builder(
                 physics: const AlwaysScrollableScrollPhysics(),

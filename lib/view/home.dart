@@ -17,21 +17,20 @@ class Home extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _currentIndex = ref.watch(indexProvider);
-    final _currentAccount = ref.watch(accountProvider);
-    final _asyncRiotAccountRepository =
-        ref.watch(riotAccountRepositoryProvider);
+    final currentIndex = ref.watch(indexProvider);
+    final currentAccount = ref.watch(accountProvider);
+    final asyncRiotAccountRepository = ref.watch(riotAccountRepositoryProvider);
 
-    return _asyncRiotAccountRepository.when(
-      data: (RiotAccountRepository _riotAccountRepository) {
+    return asyncRiotAccountRepository.when(
+      data: (RiotAccountRepository riotAccountRepository) {
         return StreamBuilder(
-          stream: _riotAccountRepository.stream,
+          stream: riotAccountRepository.stream,
           builder: (_, AsyncSnapshot<BoxEvent> snapshot) {
-            final List<RiotAccount> _riotAccounts =
-                _riotAccountRepository.riotAccounts;
+            final List<RiotAccount> riotAccounts =
+                riotAccountRepository.riotAccounts;
 
             final homeViews = [
-              _currentAccount == null
+              currentAccount == null
                   ? const ScaffoldPage(
                       content: Center(child: Text('Select account')),
                     )
@@ -48,7 +47,7 @@ class Home extends ConsumerWidget {
 
             return NavigationView(
               pane: NavigationPane(
-                selected: _currentIndex,
+                selected: currentIndex,
                 onChanged: (index) =>
                     ref.read(indexProvider.state).state = index,
                 items: [
@@ -67,9 +66,9 @@ class Home extends ConsumerWidget {
                   PaneItemHeader(
                     header: Expander(
                       header:
-                          Text(_currentAccount?.username ?? 'Select account'),
+                          Text(currentAccount?.username ?? 'Select account'),
                       content: Column(
-                        children: _riotAccounts
+                        children: riotAccounts
                             .map(
                               (account) => SizedBox(
                                 width: double.infinity,
@@ -99,7 +98,7 @@ class Home extends ConsumerWidget {
                 displayMode: PaneDisplayMode.auto,
               ),
               content: NavigationBody(
-                index: _currentIndex,
+                index: currentIndex,
                 children: homeViews,
               ),
             );
