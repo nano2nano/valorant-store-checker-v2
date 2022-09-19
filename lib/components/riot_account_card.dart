@@ -20,11 +20,11 @@ class RiotAccountCard extends ConsumerWidget {
           context,
           FluentPageRoute(
             builder: (context) => ProviderScope(
-              child: const store_front_view.StorefrontView(),
               overrides: [
                 store_front_view.riotAccountProvider
                     .overrideWithValue(riotAccount),
               ],
+              child: const store_front_view.StorefrontView(),
             ),
           ),
         );

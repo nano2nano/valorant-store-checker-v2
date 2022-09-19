@@ -1,11 +1,12 @@
 import 'package:check_store_v2/error/auth_error.dart';
+import 'package:dio/dio.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:valorant_client/valorant_client.dart';
-import 'package:dio/dio.dart';
 // ignore: implementation_imports
 import 'package:valorant_client/src/models/storefront.dart';
+import 'package:valorant_client/valorant_client.dart';
+
 import '../components/storefront_card.dart' as storefront_card;
 import '../model/riot_account/riot_account.dart';
 import '../model/weapon_skinlevel/weapon_skinlevel.dart';
@@ -49,11 +50,11 @@ class StorefrontView extends ConsumerWidget {
                 physics: const AlwaysScrollableScrollPhysics(),
                 itemCount: weapons.length,
                 itemBuilder: (context, index) => ProviderScope(
-                  child: const storefront_card.StoreItemCard(),
                   overrides: [
                     storefront_card.weaponProvider
                         .overrideWithValue(weapons[index])
                   ],
+                  child: const storefront_card.StoreItemCard(),
                 ),
               );
             },

@@ -141,13 +141,13 @@ class CommonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      child: Button(
-        onPressed: onPressed,
-        child: child,
-        style: style,
-      ),
       height: 40,
       width: 200,
+      child: Button(
+        onPressed: onPressed,
+        style: style,
+        child: child,
+      ),
     );
   }
 }
@@ -156,8 +156,8 @@ final regionDropdownMenuItemProvider = Provider<List<ComboboxItem<Region>>>(
   (ref) => Region.values.map(
     (region) {
       return ComboboxItem<Region>(
-        child: Text(EnumToString.convertToString(region)),
         value: region,
+        child: Text(EnumToString.convertToString(region)),
       );
     },
   ).toList(),

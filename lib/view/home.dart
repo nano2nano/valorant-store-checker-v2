@@ -36,12 +36,12 @@ class Home extends ConsumerWidget {
                       content: Center(child: Text('Select account')),
                     )
                   : ProviderScope(
-                      child: const storefront_view.StorefrontView(),
                       overrides: [
                         storefront_view.riotAccountProvider.overrideWithValue(
                           ref.watch(accountProvider)!,
                         )
                       ],
+                      child: const storefront_view.StorefrontView(),
                     ),
               const AddAccountView(),
             ];
