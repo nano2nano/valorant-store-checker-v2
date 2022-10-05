@@ -1,6 +1,3 @@
-// ignore_for_file: invalid_annotation_target
-
-import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'weapon_skinlevel.freezed.dart';
@@ -16,6 +13,7 @@ class WeaponSkinlevel with _$WeaponSkinlevel {
     @JsonKey(name: 'streamedVideo') String? streamedVideo,
     @JsonKey(name: 'assetPath') required String assetPath,
   }) = _WeaponSkinlevel;
-  factory WeaponSkinlevel.fromJson(Map<String, dynamic> json) =>
+
+  factory WeaponSkinlevel.fromJson(Map<String, Object?> json) =>
       _$WeaponSkinlevelFromJson(json);
 }
