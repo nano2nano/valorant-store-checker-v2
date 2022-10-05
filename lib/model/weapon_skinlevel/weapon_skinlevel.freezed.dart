@@ -12,40 +12,11 @@ part of 'weapon_skinlevel.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 WeaponSkinlevel _$WeaponSkinlevelFromJson(Map<String, dynamic> json) {
   return _WeaponSkinlevel.fromJson(json);
 }
-
-/// @nodoc
-class _$WeaponSkinlevelTearOff {
-  const _$WeaponSkinlevelTearOff();
-
-  _WeaponSkinlevel call(
-      {@JsonKey(name: 'uuid') required String uuid,
-      @JsonKey(name: 'displayName') required String displayName,
-      @JsonKey(name: 'levelItem') String? levelItem,
-      @JsonKey(name: 'displayIcon') required String displayIcon,
-      @JsonKey(name: 'streamedVideo') String? streamedVideo,
-      @JsonKey(name: 'assetPath') required String assetPath}) {
-    return _WeaponSkinlevel(
-      uuid: uuid,
-      displayName: displayName,
-      levelItem: levelItem,
-      displayIcon: displayIcon,
-      streamedVideo: streamedVideo,
-      assetPath: assetPath,
-    );
-  }
-
-  WeaponSkinlevel fromJson(Map<String, Object?> json) {
-    return WeaponSkinlevel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $WeaponSkinlevel = _$WeaponSkinlevelTearOff();
 
 /// @nodoc
 mixin _$WeaponSkinlevel {
@@ -130,11 +101,11 @@ class _$WeaponSkinlevelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$WeaponSkinlevelCopyWith<$Res>
+abstract class _$$_WeaponSkinlevelCopyWith<$Res>
     implements $WeaponSkinlevelCopyWith<$Res> {
-  factory _$WeaponSkinlevelCopyWith(
-          _WeaponSkinlevel value, $Res Function(_WeaponSkinlevel) then) =
-      __$WeaponSkinlevelCopyWithImpl<$Res>;
+  factory _$$_WeaponSkinlevelCopyWith(
+          _$_WeaponSkinlevel value, $Res Function(_$_WeaponSkinlevel) then) =
+      __$$_WeaponSkinlevelCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(name: 'uuid') String uuid,
@@ -146,15 +117,15 @@ abstract class _$WeaponSkinlevelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$WeaponSkinlevelCopyWithImpl<$Res>
+class __$$_WeaponSkinlevelCopyWithImpl<$Res>
     extends _$WeaponSkinlevelCopyWithImpl<$Res>
-    implements _$WeaponSkinlevelCopyWith<$Res> {
-  __$WeaponSkinlevelCopyWithImpl(
-      _WeaponSkinlevel _value, $Res Function(_WeaponSkinlevel) _then)
-      : super(_value, (v) => _then(v as _WeaponSkinlevel));
+    implements _$$_WeaponSkinlevelCopyWith<$Res> {
+  __$$_WeaponSkinlevelCopyWithImpl(
+      _$_WeaponSkinlevel _value, $Res Function(_$_WeaponSkinlevel) _then)
+      : super(_value, (v) => _then(v as _$_WeaponSkinlevel));
 
   @override
-  _WeaponSkinlevel get _value => super._value as _WeaponSkinlevel;
+  _$_WeaponSkinlevel get _value => super._value as _$_WeaponSkinlevel;
 
   @override
   $Res call({
@@ -165,7 +136,7 @@ class __$WeaponSkinlevelCopyWithImpl<$Res>
     Object? streamedVideo = freezed,
     Object? assetPath = freezed,
   }) {
-    return _then(_WeaponSkinlevel(
+    return _then(_$_WeaponSkinlevel(
       uuid: uuid == freezed
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
@@ -196,9 +167,7 @@ class __$WeaponSkinlevelCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_WeaponSkinlevel
-    with DiagnosticableTreeMixin
-    implements _WeaponSkinlevel {
+class _$_WeaponSkinlevel implements _WeaponSkinlevel {
   const _$_WeaponSkinlevel(
       {@JsonKey(name: 'uuid') required this.uuid,
       @JsonKey(name: 'displayName') required this.displayName,
@@ -230,28 +199,15 @@ class _$_WeaponSkinlevel
   final String assetPath;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+  String toString() {
     return 'WeaponSkinlevel(uuid: $uuid, displayName: $displayName, levelItem: $levelItem, displayIcon: $displayIcon, streamedVideo: $streamedVideo, assetPath: $assetPath)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'WeaponSkinlevel'))
-      ..add(DiagnosticsProperty('uuid', uuid))
-      ..add(DiagnosticsProperty('displayName', displayName))
-      ..add(DiagnosticsProperty('levelItem', levelItem))
-      ..add(DiagnosticsProperty('displayIcon', displayIcon))
-      ..add(DiagnosticsProperty('streamedVideo', streamedVideo))
-      ..add(DiagnosticsProperty('assetPath', assetPath));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WeaponSkinlevel &&
+            other is _$_WeaponSkinlevel &&
             const DeepCollectionEquality().equals(other.uuid, uuid) &&
             const DeepCollectionEquality()
                 .equals(other.displayName, displayName) &&
@@ -263,6 +219,7 @@ class _$_WeaponSkinlevel
             const DeepCollectionEquality().equals(other.assetPath, assetPath));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -275,23 +232,25 @@ class _$_WeaponSkinlevel
 
   @JsonKey(ignore: true)
   @override
-  _$WeaponSkinlevelCopyWith<_WeaponSkinlevel> get copyWith =>
-      __$WeaponSkinlevelCopyWithImpl<_WeaponSkinlevel>(this, _$identity);
+  _$$_WeaponSkinlevelCopyWith<_$_WeaponSkinlevel> get copyWith =>
+      __$$_WeaponSkinlevelCopyWithImpl<_$_WeaponSkinlevel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_WeaponSkinlevelToJson(this);
+    return _$$_WeaponSkinlevelToJson(
+      this,
+    );
   }
 }
 
 abstract class _WeaponSkinlevel implements WeaponSkinlevel {
   const factory _WeaponSkinlevel(
-          {@JsonKey(name: 'uuid') required String uuid,
-          @JsonKey(name: 'displayName') required String displayName,
-          @JsonKey(name: 'levelItem') String? levelItem,
-          @JsonKey(name: 'displayIcon') required String displayIcon,
-          @JsonKey(name: 'streamedVideo') String? streamedVideo,
-          @JsonKey(name: 'assetPath') required String assetPath}) =
+          {@JsonKey(name: 'uuid') required final String uuid,
+          @JsonKey(name: 'displayName') required final String displayName,
+          @JsonKey(name: 'levelItem') final String? levelItem,
+          @JsonKey(name: 'displayIcon') required final String displayIcon,
+          @JsonKey(name: 'streamedVideo') final String? streamedVideo,
+          @JsonKey(name: 'assetPath') required final String assetPath}) =
       _$_WeaponSkinlevel;
 
   factory _WeaponSkinlevel.fromJson(Map<String, dynamic> json) =
@@ -317,6 +276,6 @@ abstract class _WeaponSkinlevel implements WeaponSkinlevel {
   String get assetPath;
   @override
   @JsonKey(ignore: true)
-  _$WeaponSkinlevelCopyWith<_WeaponSkinlevel> get copyWith =>
+  _$$_WeaponSkinlevelCopyWith<_$_WeaponSkinlevel> get copyWith =>
       throw _privateConstructorUsedError;
 }
