@@ -152,10 +152,10 @@ class CommonButton extends StatelessWidget {
   }
 }
 
-final regionDropdownMenuItemProvider = Provider<List<ComboboxItem<Region>>>(
+final regionDropdownMenuItemProvider = Provider<List<ComboBoxItem<Region>>>(
   (ref) => Region.values.map(
     (region) {
-      return ComboboxItem<Region>(
+      return ComboBoxItem<Region>(
         value: region,
         child: Text(EnumToString.convertToString(region)),
       );
@@ -169,7 +169,7 @@ class RegionSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedRegion = ref.watch(selectedRegionProvider.state);
-    return Combobox<Region>(
+    return ComboBox<Region>(
       items: ref.watch(regionDropdownMenuItemProvider),
       value: selectedRegion.state,
       onChanged: (value) {

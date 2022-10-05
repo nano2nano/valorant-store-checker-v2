@@ -53,6 +53,7 @@ class Home extends ConsumerWidget {
                 items: [
                   PaneItem(
                     icon: const Icon(FluentIcons.store_logo16),
+                    body: homeViews[currentIndex],
                     title: const Text('Storefront'),
                   ),
                   PaneItemSeparator(),
@@ -96,10 +97,6 @@ class Home extends ConsumerWidget {
                   )
                 ],
                 displayMode: PaneDisplayMode.auto,
-              ),
-              content: NavigationBody(
-                index: currentIndex,
-                children: homeViews,
               ),
             );
           },
