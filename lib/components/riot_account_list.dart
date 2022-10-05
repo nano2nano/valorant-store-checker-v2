@@ -13,17 +13,16 @@ class RiotAccountList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _asyncRiotAccountRepository =
-        ref.watch(riotAccountRepositoryProvider);
-    return _asyncRiotAccountRepository.when(
-      data: (RiotAccountRepository _riotAccountRepository) {
+    final asyncRiotAccountRepository = ref.watch(riotAccountRepositoryProvider);
+    return asyncRiotAccountRepository.when(
+      data: (RiotAccountRepository riotAccountRepository) {
         return StreamBuilder(
-          stream: _riotAccountRepository.stream,
+          stream: riotAccountRepository.stream,
           builder: (_, AsyncSnapshot<BoxEvent> snapshot) {
-            final List<RiotAccount> _riotAccounts =
-                _riotAccountRepository.riotAccounts;
+            final List<RiotAccount> riotAccounts =
+                riotAccountRepository.riotAccounts;
 
-            if (_riotAccounts.isEmpty) {
+            if (riotAccounts.isEmpty) {
               return const Center(
                 child: Text('No accounts...'),
               );
@@ -32,21 +31,21 @@ class RiotAccountList extends ConsumerWidget {
             return ListView.builder(
               itemBuilder: (_, int index) {
                 return Dismissible(
-                  key: Key(_riotAccounts[index].id),
+                  key: Key(riotAccounts[index].id),
                   child: ProviderScope(
                     overrides: [
                       riotAccountProvider.overrideWithValue(
-                        _riotAccounts[index],
+                        riotAccounts[index],
                       )
                     ],
                     child: const RiotAccountCard(),
                   ),
                   onDismissed: (DismissDirection direction) async {
-                    await _riotAccountRepository.delete(_riotAccounts[index]);
+                    await riotAccountRepository.delete(riotAccounts[index]);
                   },
                 );
               },
-              itemCount: _riotAccounts.length,
+              itemCount: riotAccounts.length,
             );
           },
         );
