@@ -1,6 +1,6 @@
 import 'package:check_store_v2/view/storefront_view.dart' as store_front_view;
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../model/riot_account/riot_account.dart';
 

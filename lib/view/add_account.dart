@@ -2,7 +2,7 @@ import 'package:check_store_v2/components/riot_account_list.dart';
 import 'package:check_store_v2/repository/account_repository.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:valorant_client/valorant_client.dart';
 
