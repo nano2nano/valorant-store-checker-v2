@@ -1,8 +1,8 @@
 import 'package:check_store_v2/components/riot_account_card.dart';
 import 'package:check_store_v2/repository/account_repository.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../model/riot_account/riot_account.dart';
 

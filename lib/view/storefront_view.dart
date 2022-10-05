@@ -2,7 +2,7 @@ import 'package:check_store_v2/error/auth_error.dart';
 import 'package:dio/dio.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 // ignore: implementation_imports
 import 'package:valorant_client/src/models/storefront.dart';
 import 'package:valorant_client/valorant_client.dart';

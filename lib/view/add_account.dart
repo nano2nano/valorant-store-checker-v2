@@ -1,7 +1,7 @@
 import 'package:check_store_v2/repository/account_repository.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:valorant_client/valorant_client.dart';
 
